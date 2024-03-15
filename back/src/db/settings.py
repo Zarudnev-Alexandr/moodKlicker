@@ -3,11 +3,12 @@ import sys
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from .models import Base
+# from src.models import Base
 
 current_dir = os.path.dirname(__file__)
 
-config_reader_dir = os.path.abspath(os.path.join(current_dir, "../.."))
+config_reader_dir = os.path.abspath(os.path.join(current_dir, "../../"))
+print(config_reader_dir)
 
 sys.path.append(config_reader_dir)
 

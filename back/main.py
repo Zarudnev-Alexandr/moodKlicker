@@ -1,11 +1,8 @@
-from fastapi import FastAPI, WebSocketDisconnect, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, WebSocket
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import FastAPI
 
-from db.models import User
-from db.settings import get_session
+from src import users_router
+from src.routers.shop import shop_router
 
 app = FastAPI(debug=True)
 
@@ -24,11 +21,9 @@ async def start():
     print("Поехали")
 
 
-@app.get("/")
-async def get_users(session: AsyncSession = Depends(get_session)):
-    result = await session.execute(select(User))
-    users = result.unique().scalars().all()
-    return users
+app.include_router(users_router, prefix="/api/users", tags=["Users"])
+app.include_router(shop_router, prefix="/api/shop", tags=["Shop"])
+
 
 
 # bot.include_router(src.users_router, prefix="/api/users", tags=["Users"])

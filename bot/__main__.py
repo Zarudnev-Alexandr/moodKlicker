@@ -5,8 +5,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
 
-from bot import commands
-from bot.keyboards import confirm_debtor_fullname_kb
+from src import commands
+from src.keyboards import confirm_debtor_fullname_kb
 from config_reader import config
 import locale
 

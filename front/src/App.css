@@ -1,17 +1,16 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 body {
-  background: var(--tg-theme-bg-color);
-  /* color: var(--tg-theme-text-color) */
+  height: 100vh;
   overflow-x: hidden;
-
   font-family: "Nanum Pen Script", cursive;
   font-weight: 400;
   font-style: normal;
+  transition: all 1s;
 }
 
 .container {
@@ -22,7 +21,17 @@ body {
 
 .clicker__wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  height: 80vh;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.bottom{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }

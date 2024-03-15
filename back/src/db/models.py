@@ -31,6 +31,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     name = Column(String, nullable=False)
+    price = Column(Integer, nullable=False)
 
     boost = relationship("Boost", back_populates="item", lazy="joined")
 

@@ -1,0 +1,13 @@
+ul{
+  li{
+    list-style: none;
+  }
+}
+
+.shop{
+  margin-top: 20px;
+  margin-left: 15px;
+  display: grid;
+  grid-template-columns: 45% 45%;
+  grid-gap: 15px;
+}
