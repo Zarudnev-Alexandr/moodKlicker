@@ -32,3 +32,24 @@ async def increment_clicks(session: AsyncSession, user):
 
     await session.commit()
     return user.number_of_clicks
+
+
+async def add_password(session: AsyncSession, user, password):
+    user.password = password
+
+    await session.commit()
+    return user.password
+
+
+async def get_user_for_password(session: AsyncSession, telegram_id: int, password: str) -> Type[User] | None:
+
+    # Создание запроса
+    stmt = select(User).where(User.telegram_id == telegram_id, User.password == password)
+
+    # Выполнение запроса
+    result = await session.execute(stmt)
+
+    # Получение первого результата (если он есть)
+    user = result.unique().scalar_one_or_none()
+
+    return user

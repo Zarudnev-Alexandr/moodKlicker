@@ -5,8 +5,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
 
-from src import commands
-from src.keyboards import confirm_debtor_fullname_kb
+from src import commands, state, callbacks
 from config_reader import config
 import locale
 
@@ -20,6 +19,8 @@ async def main():
     dp.callback_query.middleware(CallbackAnswerMiddleware())
 
     dp.include_router(commands.router)
+    dp.include_router(state.router)
+    dp.include_router(callbacks.router)
 
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 

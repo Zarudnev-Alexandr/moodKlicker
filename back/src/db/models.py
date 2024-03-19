@@ -11,6 +11,7 @@ class User(Base):
     telegram_id = Column(Integer, primary_key=True, unique=True)
     number_of_clicks = Column(BigInteger, nullable=False, default=0)
     time_of_last_click = Column(DateTime, nullable=True)
+    password = Column(String, nullable=True)
 
     bought = relationship("Bought", lazy="joined")
 
@@ -31,7 +32,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     name = Column(String, nullable=False)
-    price = Column(Integer, nullable=False)
+    price = Column(BigInteger, nullable=False)
 
     boost = relationship("Boost", back_populates="item", lazy="joined")
 

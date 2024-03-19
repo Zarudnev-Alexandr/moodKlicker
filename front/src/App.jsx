@@ -45,11 +45,11 @@ function App() {
           {currentPage === 'shop' ? (
             <>
               <Shop />
-              <div className="clicker__wrapper">
-                <div className="bottom">
-                  <Button className='bottom__btn' name='Продолжить кликать' page='main' setCurrentPage={setCurrentPage} currentPage={currentPage} />
-                </div>
+              {/* <div className="clicker__wrapper"> */}
+              <div className="bottom bottom__shop">
+                <Button className='bottom__btn' name='Продолжить кликать' page='main' setCurrentPage={setCurrentPage} currentPage={currentPage} />
               </div>
+              {/* </div> */}
             </>
           ) : <></>}
         </>
