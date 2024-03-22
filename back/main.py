@@ -7,6 +7,8 @@ from src.routers.shop import shop_router
 app = FastAPI(debug=True)
 
 origins = ["http://localhost", "http://localhost:8080", "http://localhost:3000", "*"]
+# origins = ["https://backtgbot.mood-klicker.ru"]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

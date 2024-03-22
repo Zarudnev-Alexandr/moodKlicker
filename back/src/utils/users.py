@@ -19,7 +19,7 @@ async def create_user(session: AsyncSession, telegram_id: int) -> User:
     return user
 
 
-async def increment_clicks(session: AsyncSession, user):
+async def increment_clicks(session: AsyncSession, user, count):
     user_boost = 0
     user_xboost = 1
     for bought_item in user.bought:  # Итерируемся по списку купленных предметов
@@ -27,7 +27,7 @@ async def increment_clicks(session: AsyncSession, user):
             user_boost += boost_item.boost
             user_xboost *= boost_item.x_boost
 
-    user.number_of_clicks += ((1 + user_boost) * user_xboost)
+    user.number_of_clicks += (count * (1 + user_boost) * user_xboost)
     user.time_of_last_click = datetime.now()
 
     await session.commit()
