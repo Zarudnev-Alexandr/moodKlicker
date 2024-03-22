@@ -1,3 +1,5 @@
+import time
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -35,15 +37,22 @@ async def login_user_route(telegram_id: int, session: AsyncSession = Depends(get
             raise HTTPException(status_code=400, detail="Не удалось создать пользователя")
 
 
-@users_router.put("/increment_clicks/{telegram_id}")
-async def increment_clicks_route(telegram_id: int, session: AsyncSession = Depends(get_session)):
+@users_router.put("/increment_clicks/{telegram_id}/{count}")
+async def increment_clicks_route(telegram_id: int, count: int, session: AsyncSession = Depends(get_session)):
     user = await get_user(session=session, telegram_id=telegram_id)
 
     if not user:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
-    new_count_clicks = await increment_clicks(session=session, user=user, )
+    # Расшифровываем количество кликов, используя ключ
+    decrypted_count = xor_decrypt(count, int(time.time()))
+
+    new_count_clicks = await increment_clicks(session=session, user=user, count=decrypted_count)
     return new_count_clicks
+
+
+def xor_decrypt(encrypted_number, key):
+    return encrypted_number ^ key
 
 
 @users_router.get("/{telegram_id}/number_of_clicks")
