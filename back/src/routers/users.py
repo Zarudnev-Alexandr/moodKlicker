@@ -44,15 +44,9 @@ async def increment_clicks_route(telegram_id: int, count: int, session: AsyncSes
     if not user:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
-    # Расшифровываем количество кликов, используя ключ
-    decrypted_count = xor_decrypt(count, int(time.time()))
-
-    new_count_clicks = await increment_clicks(session=session, user=user, count=decrypted_count)
+    new_count_clicks = await increment_clicks(session=session, user=user, count=count)
     return new_count_clicks
 
-
-def xor_decrypt(encrypted_number, key):
-    return encrypted_number ^ key
 
 
 @users_router.get("/{telegram_id}/number_of_clicks")
