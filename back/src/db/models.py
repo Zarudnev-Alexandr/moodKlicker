@@ -12,6 +12,7 @@ class User(Base):
     number_of_clicks = Column(BigInteger, nullable=False, default=0)
     time_of_last_click = Column(DateTime, nullable=True)
     password = Column(String, nullable=True)
+    is_banned = Column(Boolean, nullable=True, default=False)
 
     bought = relationship("Bought", lazy="joined")
 

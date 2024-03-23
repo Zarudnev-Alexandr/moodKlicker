@@ -53,3 +53,10 @@ async def get_user_for_password(session: AsyncSession, telegram_id: int, passwor
     user = result.unique().scalar_one_or_none()
 
     return user
+
+
+async def put_is_banned(session: AsyncSession, user,):
+    user.is_banned = True
+
+    await session.commit()
+    return user.is_banned
