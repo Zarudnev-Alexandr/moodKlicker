@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from src.db import get_session
 from src.utils import get_user, create_user, increment_clicks
 from src.utils.users import add_password, get_user_for_password, put_is_banned
+from datetime import datetime, timedelta
 
 users_router = APIRouter()
 
@@ -37,12 +38,26 @@ async def login_user_route(telegram_id: int, session: AsyncSession = Depends(get
 @users_router.put("/increment_clicks/{telegram_id}/{count}")
 async def increment_clicks_route(telegram_id: int, count: int, session: AsyncSession = Depends(get_session)):
     user = await get_user(session=session, telegram_id=telegram_id)
+    # print((datetime.now() - user.time_of_last_click) > timedelta(seconds=1))
+    # print((datetime.now() - user.time_of_last_click))
+    # print("timedelta", timedelta(seconds=1))
+    # print("is_banned", user.is_banned)
 
     if not user:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
+    if user.is_banned is not True and (datetime.now() - user.time_of_last_click) > timedelta(seconds=1):
+        if count > 200:
+            user.is_banned = True
+            await session.commit()
+            raise HTTPException(status_code=403, detail="Пользователь забанен из-за чрезмерного количества кликов")
 
-    new_count_clicks = await increment_clicks(session=session, user=user, count=count)
-    return new_count_clicks
+        new_count_clicks = await increment_clicks(session=session, user=user, count=count)
+        return new_count_clicks
+
+    else:
+        user.is_banned = True
+        await session.commit()
+        raise HTTPException(status_code=403, detail="Пользователь забанен или слишком часто кликает")
 
 
 @users_router.get("/{telegram_id}/number_of_clicks")
