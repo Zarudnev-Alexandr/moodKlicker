@@ -38,20 +38,21 @@ async def login_user_route(telegram_id: int, session: AsyncSession = Depends(get
 @users_router.put("/increment_clicks/{telegram_id}/{count}")
 async def increment_clicks_route(telegram_id: int, count: int, session: AsyncSession = Depends(get_session)):
     user = await get_user(session=session, telegram_id=telegram_id)
-    # print((datetime.now() - user.time_of_last_click) > timedelta(seconds=1))
-    # print((datetime.now() - user.time_of_last_click))
-    # print("timedelta", timedelta(seconds=1))
-    # print("is_banned", user.is_banned)
 
     if not user:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
-    if user.is_banned is not True and (datetime.now() - user.time_of_last_click) > timedelta(seconds=1):
+
+    current_time = datetime.now()
+
+    if user.is_banned is not True and (user.time_of_last_click is None or (current_time - user.time_of_last_click) > timedelta(seconds=1)):
         if count > 200:
             user.is_banned = True
             await session.commit()
             raise HTTPException(status_code=403, detail="Пользователь забанен из-за чрезмерного количества кликов")
 
         new_count_clicks = await increment_clicks(session=session, user=user, count=count)
+        user.time_of_last_click = current_time
+        await session.commit()
         return new_count_clicks
 
     else:
