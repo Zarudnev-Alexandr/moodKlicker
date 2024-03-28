@@ -8,7 +8,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "user"
 
-    telegram_id = Column(Integer, primary_key=True, unique=True)
+    telegram_id = Column(BigInteger, primary_key=True, unique=True)
     number_of_clicks = Column(BigInteger, nullable=False, default=0)
     time_of_last_click = Column(DateTime, nullable=True)
     password = Column(String, nullable=True)
