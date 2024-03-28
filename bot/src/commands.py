@@ -46,7 +46,7 @@ async def discord(message: Message, state: FSMContext):
         await state.clear()
         return
 
-    await message.answer(f"Твой telegram id: {telegram_id}, используешь  это потом в дискорде. \n"
+    await message.answer(f"Твой telegram id: <code>{telegram_id}</code>, используешь  это потом в дискорде. \n"
                          f"Напиши пароль для дискорда: ")
     await state.set_state(UserAddPassword.waiting_for_password)
 

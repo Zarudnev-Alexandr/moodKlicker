@@ -92,8 +92,8 @@ async def get_user_for_password_func(telegram_id: int, password: str, session: A
     user = await get_user_for_password(session=session, telegram_id=telegram_id, password=password)
     if user:
         # Вычисляем количество кликов для конвертации
-        convert_clicks = user.number_of_clicks // 10000
-        written_off_clicks = convert_clicks * 10000
+        convert_clicks = user.number_of_clicks // 30000
+        written_off_clicks = convert_clicks * 30000
         remaining_clicks = user.number_of_clicks - written_off_clicks
 
         # Обновляем данные пользователя в базе данных
