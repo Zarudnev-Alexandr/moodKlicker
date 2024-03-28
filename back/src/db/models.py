@@ -22,7 +22,7 @@ class Bought(Base):
 
     id = Column(Integer, primary_key=True, unique=True)
 
-    user_id = Column(Integer, ForeignKey("user.telegram_id"), nullable=False)
+    user_id = Column(BigInteger, ForeignKey("user.telegram_id"), nullable=False)
     item_id = Column(Integer, ForeignKey("item.id"), nullable=False)
 
     items = relationship("Item", lazy="joined")
