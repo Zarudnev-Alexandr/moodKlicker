@@ -13,7 +13,7 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 async def main():
-    bot = Bot(config.bot_token.get_secret_value())
+    bot = Bot(config.bot_token.get_secret_value(), parse_mode='HTML')
 
     dp = Dispatcher()
     dp.callback_query.middleware(CallbackAnswerMiddleware())

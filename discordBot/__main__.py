@@ -76,15 +76,16 @@ async def on_import(ctx):
 
     elif status == 200:
         if data["convert_clicks"] == 0:
-            await message.edit(content=f"😢Не хватает кликов на конвертацию. Курс: 10000 кликов = 1 серверная валюта. Нужно еще "
+            await message.edit(content=f"😢Не хватает кликов на конвертацию. Курс: 30000 кликов = 1 серверная валюта. "
+                                       f"Нужно еще "
                                         f"накликать")
         elif data["convert_clicks"] > 0:
             await message.edit(content=f"👆Кликов было: {data['number_of_clicks']}\n"
                                         f"✍Списано кликов: {data['written_off_clicks']}\n"
                                         f"🤑Валюты получено: {data['convert_clicks']}\n"
-                                        f"💀Кликов осталось: {data['remaining_clicks']}\n\n")
-            await ctx.send(f"Для админа {admin_id}:\n"
-                           f"-add-money bank {ctx.author} {data['convert_clicks']}")
+                                        f"💀Кликов осталось: {data['remaining_clicks']}\n"
+                                        f"Для админа {admin_id}:\n\n")
+            await ctx.send(f"-add-money bank {ctx.author} {data['convert_clicks']}")
 
 bot.run(config.bot_token.get_secret_value())
 
